@@ -1,0 +1,42 @@
+{
+	"name": "Capital Wasteland",
+	"region": "Capital Wasteland",
+	"width": 1632,
+	"height": 1632,
+	"km_across": 82.04,
+	"winding": 1.3,
+	"credit": "The map, its markers, terrain zones and location notes are by the maker of the 'Fallout 3 v2' Obsidian vault for Fallout 2d20 (shared through their Google Drive, with an install guide). The map image is Fallout 3's Pip-Boy world map.",
+	"overlays": [
+		{ "name": "Coordinate grid", "image": "capital-wasteland-grid.png" },
+		{ "name": "Train lines", "image": "capital-wasteland-trains.png" }
+	],
+	"default_marker": "landmark",
+	"zone_terrain": {
+		"Open": { "terrain": "Plains" },
+		"Plains": { "terrain": "Plains" },
+		"Water": { "terrain": "Water", "going": "hard" },
+		"Marsh": { "terrain": "Marshland", "going": "rough" },
+		"Hill": { "terrain": "Hills", "going": "rough" },
+		"Mountain": { "terrain": "Mountains", "going": "hard" },
+		"Mountian": { "terrain": "Mountains", "going": "hard" },
+		"Forest": { "terrain": "Forests and Woodlands", "going": "rough" },
+		"Ruins": { "terrain": "Ruins", "going": "normal" }
+	},
+	"markers": {
+		"enclave": "enclave", "Ruins": "ruins", "Raider Camp": "raiders", "Metro": "metro", "Power Station": "power plant",
+		"Super Mutant Camp": "encampment", "Deathclaw": "danger", "Toxic Spill": "radiation", "Tent": "camp", "Cave": "cave",
+		"House": "houses", "Boat": "boat", "Checkpoint": "military", "Talon Company": "encampment", "Rad Scorpion": "danger",
+		"Ant Hill": "danger", "Water Works": "dam", "Yao guai": "danger", "Mirelurk": "danger", "brotherhood": "brotherhood",
+		"Gas": "gas station", "Dinner": "bar", "farm": "farm", "Molerat": "danger", "Vault": "vault", "Radio Tower": "radio tower",
+		"Outcast": "brotherhood", "Factory": "factory", "Truck": "highway", "Movie": "building", "Fishing": "pier", "Coffee": "bar",
+		"barracks": "bunker", "Camp Grounds": "campfire", "Church": "church", "Corn": "farm", "Grave": "graveyard",
+		"Satellite": "satellite", "Auto Shop": "workshop", "School": "school", "Robot": "factory", "money": "market",
+		"Tunnel": "sewer", "Car": "highway", "meteor": "crater", "Hammer": "workshop", "Pocket Radio": "radio tower",
+		"Baseball": "landmark", "Monument": "monument", "Lincoln Memorial": "monument", "Hotel": "apartments", "Train": "train station",
+		"Town": "town", "Bridge": "highway", "Radiation": "radiation", "ufo": "crash site", "Minefield": "x", "Hospital": "hospital",
+		"Card": "bar", "Barber": "shack", "Ice cream": "market", "Capital Building": "monument", "supreme court": "landmark",
+		"News Paper": "office", "Hubris Comics": "office", "Anchorage Memorial": "monument", "Washington Monument": "monument",
+		"super duper": "market", "Apple": "farm", "Clover": "low-rise", "Bow": "shack", "race": "landmark", "Pirate Pely": "pier",
+		"Roach King's Throne": "danger", "Olney Powerworks": "power plant", "Alexandria Arms": "ruins"
+	}
+}

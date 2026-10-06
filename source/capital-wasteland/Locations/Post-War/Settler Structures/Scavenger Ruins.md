@@ -1,0 +1,36 @@
+**Scavenger Ruins**
+A blown-out house now serves as a makeshift storage space for a scavenger’s haul.
+
+
+**Overseer Information**
+--
+**Location Loot**
+- **Size**: Small
+- **Type**: Residential
+- **Loot**: Clothing (2), Food (2), Beverages (2), Junk (4), Other (2)
+- **Degree Searched**: Partly Searched
+       - **Test Difficulty**: 1
+       - **Items Reduced**: -3
+- **Notable Loot**: 
+       - None
+
+**Location Details**
+- **Exterior Hazards**: Mist/Fog, Radstorm, Rain
+- **Interior Hazards**: Traps
+- **Travel Terrain**: Hills
+       - Hard up, Rough down
+- **Interior Lighting**: Normal
+- **Exterior Lighting**: Normal
+- **Cover**: Light (0-1 ▣)
+
+**Likely Inhabitants**
+- Wastelanders
+
+**Suggested Combat Encounter Difficulty**
+- Simple
+
+**Notable NPCs**
+- None
+
+**Source**
+https://fallout.fandom.com/wiki/Scavenger_ruins
