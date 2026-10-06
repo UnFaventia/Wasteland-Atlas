@@ -58,6 +58,8 @@ const commands = {
 		if (pt.error) return fail(pt.error);
 		const z = A.zoneAt(map, pt.x, pt.y);
 		console.log(z ? `${z.label}: ${z.terrain}, ${z.going} going` : "No zone: normal ground.");
+		const d = A.dangerAt(map, pt.x, pt.y);
+		for (const x of d.zones) console.log(`Danger: ${x.label ?? x.id} (+${x.danger ?? 0} CD${x.table ? `, encounters on ${x.table}` : ""}).`);
 	},
 	maps() {
 		for (const f of fs.readdirSync(path.join(root, "data")).filter((f) => /^[a-z-]+\.json$/.test(f) && !f.endsWith(".edits.json"))) {

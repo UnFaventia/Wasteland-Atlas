@@ -157,6 +157,17 @@ for (const [zid, e] of Object.entries(edits.zones ?? {})) {
 	const z = zones.find((x) => x.id === zid);
 	if (z) Object.assign(z, e);
 }
+// Danger zones are hand edits only: a circle `around` a node (its `km`), or a `polygon`
+const dangers = [];
+for (const d of [].concat(edits.dangers ?? [])) {
+	const { around, ...rest } = d;
+	if (around) {
+		const node = nodes.find((x) => key(x.name) === key(around));
+		if (!node) { console.log(`  danger zone "${d.label ?? d.id}": no node called ${around}`); continue; }
+		dangers.push({ ...rest, around: node.name, center: [node.x, node.y] });
+	} else if (d.polygon) dangers.push(rest);
+	else console.log(`  danger zone "${d.label ?? d.id}": give it \`around\` (a node) and \`km\`, or a \`polygon\``);
+}
 
 const map = {
 	id,
@@ -171,9 +182,10 @@ const map = {
 	overlays: config.overlays ?? [],
 	nodes,
 	zones,
+	dangers,
 	roads: edits.roads ?? [],
 };
 fs.writeFileSync(path.join(root, "data", `${id}.json`), `${JSON.stringify(map, null, "\t")}\n`);
 fs.writeFileSync(path.join(root, "data", `${id}.places.json`), `${JSON.stringify(notes, null, "\t")}\n`);
-console.log(`${id}: ${nodes.length} nodes (${nodes.filter((n) => n.no_note).length} without a note), ${zones.length} zones (${zones.filter((z) => !z.terrain).length} without a terrain), ${notes.length} places (${notes.filter((n) => !n.node).length} not on the map, ${notes.filter((n) => n.homebrew).length} homebrew).`);
+console.log(`${id}: ${nodes.length} nodes (${nodes.filter((n) => n.no_note).length} without a note), ${zones.length} zones (${zones.filter((z) => !z.terrain).length} without a terrain), ${dangers.length} danger zone${dangers.length === 1 ? "" : "s"}, ${notes.length} places (${notes.filter((n) => !n.node).length} not on the map, ${notes.filter((n) => n.homebrew).length} homebrew).`);
 for (const z of zones.filter((z) => !z.terrain)) console.log(`  zone with no terrain: "${z.label}"`);
