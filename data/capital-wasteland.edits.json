@@ -3,5 +3,8 @@
 		"Rustwater Junction": { "x": 0.62, "y": 0.5, "icon": null, "marker": "settlement", "layer": "Settlements", "vault_only": true, "note": "The vault's own test settlement (scaffolding), moved here from the Commonwealth when the Capital Wasteland became home (GM Toolkit Plan, R5-1a)." }
 	},
 	"zones": {},
+	"dangers": [
+		{ "id": "rust-devils-corvega", "label": "Rust Devil ground (the Corvega Factory)", "around": "Corvega Factory", "km": 4, "danger": 1, "table": "Random Rust Devil Encounters", "note": "The Rust Devils' kingdom in the Capital Wasteland and the ground their patrols work: the factory, its outskirts, the Corvega townships nearest it and Vault 108's door. Light patrols out here (the vault's Rust Devils Plan, RD4 c and the RD6 ruling)." }
+	],
 	"roads": []
 }

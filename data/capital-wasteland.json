@@ -10146,5 +10146,20 @@
 			]
 		}
 	],
+	"dangers": [
+		{
+			"id": "rust-devils-corvega",
+			"label": "Rust Devil ground (the Corvega Factory)",
+			"km": 4,
+			"danger": 1,
+			"table": "Random Rust Devil Encounters",
+			"note": "The Rust Devils' kingdom in the Capital Wasteland and the ground their patrols work: the factory, its outskirts, the Corvega townships nearest it and Vault 108's door. Light patrols out here (the vault's Rust Devils Plan, RD4 c and the RD6 ruling).",
+			"around": "Corvega Factory",
+			"center": [
+				0.91117,
+				0.49656
+			]
+		}
+	],
 	"roads": []
 }

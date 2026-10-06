@@ -4,11 +4,12 @@
 //
 // writes, for each map:
 //   _System/gm/atlas/atlas.js                  the route calculator (the console requires it; the phone never does)
-//   _System/gm/atlas/<map>.json                the map: nodes, zones, roads, scale
+//   _System/gm/atlas/<map>.json                the map: nodes, zones, danger zones, roads, scale
 //   _System/gm/atlas/<map>.places.json         the gazetteer (the map-maker's place profiles)
 //   _Assets/Maps/<Name>.webp                   the map image, and each overlay on its own (transparent, drawn over
 //                                              the map by Leaflet's imageOverlay, so the pins stay on one base layer)
-//   _Assets/Maps/<Name> terrain.json           the zones as GeoJSON, for the Leaflet map
+//   _Assets/Maps/<Name> terrain.json           the terrain zones as GeoJSON, for the Leaflet map (never the
+//                                              danger zones: they're the GM's)
 //   _System/gm/atlas/manifest.json             what was written, so the next export removes only its own files
 // The images go to WebP through @napi-rs/canvas (the console's canvas: /tmp/gm-canvas, or GM_CANVAS); without
 // it they're copied as PNG.
@@ -91,7 +92,7 @@ module.exports = async function exportVault(root, vault, { maps = null } = {}) {
 			}),
 		};
 		write(`_Assets/Maps/${map.name} terrain.json`, JSON.stringify(geo));
-		summary.push(`${map.name}: ${map.nodes.length} places on the map, ${places.length} in the gazetteer, ${map.zones.length} zones, ${(map.roads ?? []).length} roads`);
+		summary.push(`${map.name}: ${map.nodes.length} places on the map, ${places.length} in the gazetteer, ${map.zones.length} zones, ${(map.dangers ?? []).length} danger zone${(map.dangers ?? []).length === 1 ? "" : "s"}, ${(map.roads ?? []).length} roads`);
 	}
 
 	// Remove what the last export wrote and this one didn't

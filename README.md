@@ -23,9 +23,10 @@ The Capital Wasteland map's markers, terrain zones and location notes are the wo
 
 - **Coordinates** are `x` and `y` from 0 to 1, from the image's top left. The scale (`km_across`) turns them into kilometres.
 - **A node** is a place on the map: `{ name, x, y, marker, layer }`. `marker` is the vault's map-marker kind (`settlement`, `vault`, `danger`…). `layer` is the map-maker's (Settlements, Minor Locations, Metro & Caves, Homebrew).
-- **A zone** is a terrain polygon: `{ label, terrain, going, danger, polygon }`. `terrain` names a terrain note in the vault (`Rules/Travel/Terrain/`). `going` is open, normal, rough or hard. Ground outside every zone is normal going. `danger` is 0 for now, for the encounter dice later.
+- **A zone** is a terrain polygon: `{ label, terrain, going, danger, polygon }`. `terrain` names a terrain note in the vault (`Rules/Travel/Terrain/`). `going` is open, normal, rough or hard. Ground outside every zone is normal going. `danger` is 0 on all of them so far.
+- **A danger zone** is ground where trouble finds you more often (E2 in the vault's GM Toolkit Plan): `{ id, label, danger, table, note }` with a circle (`around` a node, `km` across its radius; the importer adds the node's spot as `center`) or a `polygon`. `danger` (0–3) is the CD it adds to the vault's encounter check, and `table` is the vault's encounter table that a hit there rolls (the Rust Devils' ground around the Corvega Factory rolls `Random Rust Devil Encounters`). Where zones overlap, the worst danger counts, and the innermost zone with a table gives it. They're the GM's: the export leaves them off the phone's map.
 - **A gazetteer entry** is the map-maker's profile of a place, parsed into fields: description, size, type, loot by category, degree searched (with its difficulty and the items it removes), hazards (exterior and interior), terrain, lighting, cover, likely inhabitants, suggested difficulty, vendors, notable NPCs and source.
-- **Hand edits** go in `data/<map>.edits.json` (`nodes`, `zones`, `roads`), never in the generated files, so re-importing keeps them. The vault's Rustwater Junction lives there.
+- **Hand edits** go in `data/<map>.edits.json` (`nodes`, `zones`, `dangers`, `roads`), never in the generated files, so re-importing keeps them. The vault's Rustwater Junction and the danger zones live there.
 - **Roads** are empty for now. They come in P2, traced from the map a district at a time.
 
 ## The route (P1)
@@ -47,7 +48,7 @@ Run from the repo's root:
 node bin/atlas.js route <from> <to> [--agi 6] [--end 5] [--hurried] [--push n] [--json]
 node bin/atlas.js find <text>             places on the map whose names match
 node bin/atlas.js place <name>            a place's gazetteer entry
-node bin/atlas.js at <name | x,y>         the terrain zone there
+node bin/atlas.js at <name | x,y>         the terrain zone there, and any danger zones
 node bin/atlas.js maps                    the maps
 node bin/atlas.js export <vault folder>   copy the calculator, the data and the images into the vault
 
