@@ -6,7 +6,8 @@
 //   _System/gm/atlas/atlas.js                  the route calculator (the console requires it; the phone never does)
 //   _System/gm/atlas/<map>.json                the map: nodes, zones, roads, scale
 //   _System/gm/atlas/<map>.places.json         the gazetteer (the map-maker's place profiles)
-//   _Assets/Maps/<Name>.webp                   the map image, and a copy with each overlay drawn on it
+//   _Assets/Maps/<Name>.webp                   the map image, and each overlay on its own (transparent, drawn over
+//                                              the map by Leaflet's imageOverlay, so the pins stay on one base layer)
 //   _Assets/Maps/<Name> terrain.json           the zones as GeoJSON, for the Leaflet map
 //   _System/gm/atlas/manifest.json             what was written, so the next export removes only its own files
 // The images go to WebP through @napi-rs/canvas (the console's canvas: /tmp/gm-canvas, or GM_CANVAS); without
@@ -50,25 +51,28 @@ module.exports = async function exportVault(root, vault, { maps = null } = {}) {
 		const map = JSON.parse(fs.readFileSync(path.join(root, "data", `${id}.json`), "utf8"));
 		const places = JSON.parse(fs.readFileSync(path.join(root, "data", `${id}.places.json`), "utf8"));
 		// The vault's copy names its images as the vault does
-		const image = `${map.name}.webp`;
-		write(`_System/gm/atlas/${id}.json`, JSON.stringify({ ...map, image, overlays: (map.overlays ?? []).map((o) => ({ ...o, image: `${map.name} (${o.name.toLowerCase()}).webp` })) }));
+		const ext = C ? "webp" : "png";
+		const image = `${map.name}.${ext}`;
+		const overlayImage = (o) => `${map.name} (${o.name.toLowerCase()}).${ext}`;
+		write(`_System/gm/atlas/${id}.json`, JSON.stringify({ ...map, image, overlays: (map.overlays ?? []).map((o) => ({ ...o, image: overlayImage(o) })) }));
 		write(`_System/gm/atlas/${id}.places.json`, JSON.stringify(places));
 
-		// The images: the map, and the map with each overlay drawn over it (Leaflet switches between them)
+		// The images: the map, and each overlay on its own. The vault's Leaflet map draws the overlays over the map as
+		// tick boxes (imageOverlay), not as base layers: the plugin keeps pins per base layer, so switching base
+		// images would hide them.
 		const src = path.join(root, "maps", map.image);
 		if (C) {
-			const base = await C.loadImage(fs.readFileSync(src));
-			const draw = async (overlay) => {
-				const c = C.createCanvas(base.width, base.height);
-				const x = c.getContext("2d");
-				x.drawImage(base, 0, 0);
-				if (overlay) x.drawImage(await C.loadImage(fs.readFileSync(path.join(root, "maps", overlay))), 0, 0, base.width, base.height);
+			const webp = async (file) => {
+				const im = await C.loadImage(fs.readFileSync(file));
+				const c = C.createCanvas(im.width, im.height);
+				c.getContext("2d").drawImage(im, 0, 0);
 				return c.encode("webp", 88);
 			};
-			write(`_Assets/Maps/${image}`, await draw(null));
-			for (const o of map.overlays ?? []) write(`_Assets/Maps/${map.name} (${o.name.toLowerCase()}).webp`, await draw(o.image));
+			write(`_Assets/Maps/${image}`, await webp(src));
+			for (const o of map.overlays ?? []) write(`_Assets/Maps/${overlayImage(o)}`, await webp(path.join(root, "maps", o.image)));
 		} else {
-			write(`_Assets/Maps/${map.name}.png`, fs.readFileSync(src));
+			write(`_Assets/Maps/${image}`, fs.readFileSync(src));
+			for (const o of map.overlays ?? []) write(`_Assets/Maps/${overlayImage(o)}`, fs.readFileSync(path.join(root, "maps", o.image)));
 		}
 
 		// The zones as GeoJSON in the Leaflet map's pixels: x across, y up from the bottom
@@ -96,7 +100,7 @@ module.exports = async function exportVault(root, vault, { maps = null } = {}) {
 	try { commit = execSync("git rev-parse --short HEAD", { cwd: root }).toString().trim(); } catch (e) { /* not a git checkout */ }
 	written.push("_System/gm/atlas/manifest.json");
 	fs.writeFileSync(manifestFile, `${JSON.stringify({ exported: new Date().toISOString(), atlas_commit: commit, maps: ids, files: written }, null, "\t")}\n`);
-	console.log(`Exported into ${vault}${C ? "" : " (no canvas: the map stays PNG)"}:`);
+	console.log(`Exported into ${vault}${C ? "" : " (no canvas: the images stay PNG)"}:`);
 	for (const s of summary) console.log(`  ${s}`);
 	console.log(`  ${written.length} files; manifest at _System/gm/atlas/manifest.json`);
 };
