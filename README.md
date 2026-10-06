@@ -60,11 +60,11 @@ node tools/import-zoommap.js capital-wasteland   rebuild data/ from source/ and 
 
 - `_System/gm/atlas/atlas.js`: the calculator. The vault's console loads it; the phone never does.
 - `_System/gm/atlas/<map>.json` and `<map>.places.json`: the map and its gazetteer.
-- `_Assets/Maps/<Name>.webp`: the map, plus a copy with each overlay drawn on. The vault's Leaflet map switches between them.
+- `_Assets/Maps/<Name>.webp`, and `<Name> (<overlay>).webp` for each overlay on its own (transparent). The vault's Leaflet map shows the overlays as tick boxes over the one map (`imageOverlay`). They aren't separate base maps, because the plugin keeps hand-placed pins per base map, and switching would hide them.
 - `_Assets/Maps/<Name> terrain.json`: the zones as GeoJSON, in the Leaflet map's pixels (y up from the bottom), coloured by terrain.
 - `_System/gm/atlas/manifest.json`: what it wrote, so the next export removes only its own files.
 
-The WebP images need `@napi-rs/canvas`. The export looks in `GM_CANVAS`, then `/tmp/gm-canvas` (where the vault's cloud environment installs it), then the usual places. Without it, the map goes over as PNG and the overlays are skipped.
+The WebP images need `@napi-rs/canvas`. The export looks in `GM_CANVAS`, then `/tmp/gm-canvas` (where the vault's cloud environment installs it), then the usual places. Without it, the images go over as PNG.
 
 After exporting, run the vault's checks (`node _System/gm/check.js`, and the viewtest) and commit there.
 
