@@ -55,10 +55,13 @@ function parseNote(file) {
 		return out;
 	};
 	const bullets = (s) => lines(s).map((l) => l.replace(/^\s*-\s*/, "").trim()).filter((l) => l && !/^none$/i.test(l));
-	const desc = []; // the description: after the title, before Overseer Information
+	// The description: under the title, before Overseer Information. The title is the note's first heading, whatever
+	// it says: the map-maker's don't always match the file ("Raider Scrap Shack" for Raid shack, "Description")
+	const desc = [];
+	const title = Object.keys(sections).find((k) => k !== "_top");
 	for (const [k, v] of Object.entries(sections)) {
 		if (k === "Overseer Information") break;
-		if (k === name || k === "_top") desc.push(...v);
+		if (k === title || k === "_top") desc.push(...v);
 	}
 	const loot = fields("Location Loot");
 	const det = fields("Location Details");

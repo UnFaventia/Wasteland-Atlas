@@ -6,7 +6,9 @@ The first map is the **Capital Wasteland**, 82 km across, with 458 places, a 455
 
 ## Credit
 
-The Capital Wasteland map's markers, terrain zones and location notes are the work of the maker of the **"Fallout 3 v2"** Obsidian vault for Fallout 2d20, shared through their Google Drive with an install guide and a travel time calculator. The map image is Fallout 3's Pip-Boy world map (Bethesda). Their files sit in `source/capital-wasteland/` and `maps/` as they came; everything in `data/` is derived from them. This repo is private and for personal play.
+The Capital Wasteland map's markers, terrain zones and location notes are the work of the maker of the **"Fallout 3 v2"** Obsidian vault for Fallout 2d20, shared through their Google Drive with an install guide and a travel time calculator. The map image is Fallout 3's Pip-Boy world map (Bethesda). Their files sit in `source/capital-wasteland/` and `maps/` as they came; everything in `data/` is derived from them. It's all for personal play.
+
+The same maker shared free fan supplements, which wait at the repo's root until a map uses them: **Point Lookout Campaign Guide.pdf**, **Point Lookout map.pdf** and **The New Plague.pdf**. They're free fan content, not the owner's bought books, so they live here rather than in the private Books repo.
 
 ## What's where
 
@@ -27,7 +29,8 @@ The Capital Wasteland map's markers, terrain zones and location notes are the wo
 - **A danger zone** is ground where trouble finds you more often (E2 in the vault's GM Toolkit Plan): `{ id, label, danger, table, note }` with a circle (`around` a node, `km` across its radius; the importer adds the node's spot as `center`) or a `polygon`. `danger` (0–3) is the CD it adds to the vault's encounter check, and `table` is the vault's encounter table that a hit there rolls (the Rust Devils' ground around the Corvega Factory rolls `Random Rust Devil Encounters`). Where zones overlap, the worst danger counts, and the innermost zone with a table gives it. They're the GM's: the export leaves them off the phone's map.
 - **A gazetteer entry** is the map-maker's profile of a place, parsed into fields: description, size, type, loot by category, degree searched (with its difficulty and the items it removes), hazards (exterior and interior), terrain, lighting, cover, likely inhabitants, suggested difficulty, vendors, notable NPCs and source.
 - **Hand edits** go in `data/<map>.edits.json` (`renames`, `nodes`, `zones`, `dangers`, `roads`), never in the generated files, so re-importing keeps them. The vault's Rustwater Junction and the danger zones live there.
-- **A misspelt name** is put right with `renames` (`{ "Oaisis": "Oasis" }`): the importer reads the note's file and its marker's link under the right name, so the map-maker's files stay as they came. Oasis is the first (its note's title already said Oasis, so its description comes through now too).
+- **A misspelt name** is put right with `renames` (`{ "Oaisis": "Oasis" }`): the importer reads the note's file and its marker's link under the right name, so the map-maker's files stay as they came. Oasis is the first.
+- **A place's name** is its note's file name, which is also its marker's link. The title inside the note can differ (a slip, or an earlier note's title left in: "Raider Scrap Shack" for Raid shack, "Fort Independence" for the Fairfax checkpoint), so the importer reads the description from under the note's first heading, whatever that heading says.
 - **Roads** are empty for now. They come in P2, traced from the map a district at a time.
 
 ## The route (P1)

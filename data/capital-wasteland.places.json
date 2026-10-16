@@ -5724,7 +5724,7 @@
 	{
 		"name": "Drainage chamber",
 		"folder": "Pre-War/Ruins/Wasteland Ruins",
-		"description": "",
+		"description": "A nearby radio transmitter is looping a long dead message from Bob Andersteen, one asking for help in a nearby drainage chamber for his sick son.",
 		"size": "Small",
 		"type": "Residential",
 		"loot": {
@@ -6922,7 +6922,7 @@
 	{
 		"name": "Enclave Checkpoint, Fairfax",
 		"folder": "Post-War/Enclave Sites",
-		"description": "",
+		"description": "A number of modular metal barricades and walkways have been constructed on the roadside along with what appears to be a maze of zig-zagging ropes meant to form a que. This camp is seemingly on President Eden's side of the civil war.",
 		"size": "Small",
 		"type": "Military",
 		"loot": {
@@ -7982,7 +7982,7 @@
 	{
 		"name": "Enclave Outpost, Rockland Tunnel",
 		"folder": "Post-War/Enclave Sites",
-		"description": "",
+		"description": "Carved from the mountain is a pre-war vehicle tunnel. The main entrance is collapsed, the tunnel is entered through a door built into a wall on the side. There are several irradiated pools outside of the gate. This camp is seemingly on Augustus Autumn's side of the civil war.",
 		"size": "Small",
 		"type": "Military",
 		"loot": {
@@ -10863,7 +10863,7 @@
 	{
 		"name": "Hill Top Illegal Dumping Site",
 		"folder": "Pre-War/Dumping Sites",
-		"description": "",
+		"description": "An innumerable number of industrial barrels have been lazily dumped here. Almost every barrel has a \"JB\" embossed on its side and green sludge leaks from several.",
 		"size": "Average",
 		"type": "Industry",
 		"loot": {
@@ -11619,7 +11619,7 @@
 	{
 		"name": "Jackknifed freeway truck",
 		"folder": "Pre-War/Ruins/Wasteland Ruins",
-		"description": "",
+		"description": "A truck and trailer are visible at a high rise near the end of a ruined section of the freeway overpass.",
 		"size": "Small",
 		"type": "Industry",
 		"loot": {
@@ -11947,7 +11947,7 @@
 	{
 		"name": "Kaelyn's Bed & Breakfast",
 		"folder": "Pre-War/Ruins/Wasteland Ruins",
-		"description": "",
+		"description": "A large building still remains here, its advertisement suggests it was once a bead and breakfast.",
 		"size": "Small",
 		"type": "Residential",
 		"loot": {
@@ -17571,7 +17571,7 @@
 	{
 		"name": "Raid shack",
 		"folder": "Post-War/Raider Camps",
-		"description": "",
+		"description": "A scrappy shack has been built to overlook the nearby roadways, A number of lawn chairs pointing towards the roadway.",
 		"size": "Small",
 		"type": "Military",
 		"loot": {
@@ -18021,7 +18021,7 @@
 	{
 		"name": "Raider Camp, Slope",
 		"folder": "Post-War/Raider Camps",
-		"description": "",
+		"description": "A small raider camp is nestled into the hillside, a number of bumper sleds at the ready.",
 		"size": "Small",
 		"type": "Military",
 		"loot": {
@@ -22352,7 +22352,7 @@
 	{
 		"name": "Talon Company Camp, Ballpark Parking Lot",
 		"folder": "Post-War/Talon Company Camps",
-		"description": "",
+		"description": "A large Talon Company camp has been tasked with guarding the area.",
 		"size": "Small",
 		"type": "Military",
 		"loot": {
