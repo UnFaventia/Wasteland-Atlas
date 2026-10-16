@@ -24,9 +24,16 @@ const decodeName = (s) => s.replace(/#U([0-9A-F]{4})/gi, (_, h) => String.fromCh
 const key = (s) => decodeName(String(s ?? "")).toLowerCase().replace(/[–—]/g, "-").replace(/\s+/g, " ").trim();
 const list = (s) => String(s ?? "").split(/\s*,\s*/).map((x) => x.trim()).filter((x) => x && !/^none$/i.test(x));
 
+// The hand edits (data/<map>.edits.json). `renames` puts a misspelt name right ({ "Oaisis": "Oasis" }) for a note's
+// file and its marker's link alike, so the source files stay as they came; the rest are applied last, below
+const editsFile = path.join(root, "data", `${id}.edits.json`);
+const edits = fs.existsSync(editsFile) ? JSON.parse(fs.readFileSync(editsFile, "utf8")) : {};
+const renames = new Map(Object.entries(edits.renames ?? {}).map(([from, to]) => [key(from), to]));
+const renamed = (s) => renames.get(key(s)) ?? decodeName(String(s ?? ""));
+
 function parseNote(file) {
 	const text = fs.readFileSync(file, "utf8").replace(/\r/g, "");
-	const name = decodeName(path.basename(file, ".md"));
+	const name = renamed(path.basename(file, ".md"));
 	const sections = {};
 	let current = "_top";
 	for (const line of text.split("\n")) {
@@ -48,10 +55,13 @@ function parseNote(file) {
 		return out;
 	};
 	const bullets = (s) => lines(s).map((l) => l.replace(/^\s*-\s*/, "").trim()).filter((l) => l && !/^none$/i.test(l));
-	const desc = []; // the description: after the title, before Overseer Information
+	// The description: under the title, before Overseer Information. The title is the note's first heading, whatever
+	// it says: the map-maker's don't always match the file ("Raider Scrap Shack" for Raid shack, "Description")
+	const desc = [];
+	const title = Object.keys(sections).find((k) => k !== "_top");
 	for (const [k, v] of Object.entries(sections)) {
 		if (k === "Overseer Information") break;
-		if (k === name || k === "_top") desc.push(...v);
+		if (k === title || k === "_top") desc.push(...v);
 	}
 	const loot = fields("Location Loot");
 	const det = fields("Location Details");
@@ -101,10 +111,10 @@ const byKey = new Map(notes.map((n) => [key(n.name), n]));
 const nodes = [];
 for (const m of markers.markers ?? []) {
 	if (!m.link) continue; // an unnamed pin
-	const place = byKey.get(key(m.link));
+	const place = byKey.get(key(renamed(m.link)));
 	const layer = layers[m.layer] ?? null;
 	nodes.push({
-		name: place?.name ?? decodeName(m.link),
+		name: place?.name ?? renamed(m.link),
 		x: round(m.x),
 		y: round(m.y),
 		icon: m.iconKey ?? null,
@@ -145,9 +155,7 @@ function terrainFor(label) {
 	return { terrain, going: hit?.[1].going ?? said ?? "normal" };
 }
 
-// ---------- Hand edits, last ----------
-const editsFile = path.join(root, "data", `${id}.edits.json`);
-const edits = fs.existsSync(editsFile) ? JSON.parse(fs.readFileSync(editsFile, "utf8")) : {};
+// ---------- Hand edits, last (the renames were applied as the notes and markers were read) ----------
 for (const [n, e] of Object.entries(edits.nodes ?? {})) {
 	const node = nodes.find((x) => key(x.name) === key(n));
 	if (node) Object.assign(node, e);
