@@ -15424,9 +15424,9 @@
 		"node": true
 	},
 	{
-		"name": "Oaisis",
+		"name": "Oasis",
 		"folder": "Settlements",
-		"description": "",
+		"description": "First founded on top of a number of old-world mining tunnels, it has been transformed by unnatural greenery. A verdant forest has expanded from an epicenter at its tucked away and isolated  core. The Treeminder cult soon established itself and now protects their grove while seeking to recruit like-minded individuals.",
 		"size": "Average",
 		"type": "Agriculture",
 		"loot": {

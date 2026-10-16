@@ -1,4 +1,5 @@
 {
+	"renames": { "Oaisis": "Oasis" },
 	"nodes": {
 		"Rustwater Junction": { "x": 0.62, "y": 0.5, "icon": null, "marker": "settlement", "layer": "Settlements", "vault_only": true, "note": "The vault's own test settlement (scaffolding), moved here from the Commonwealth when the Capital Wasteland became home (GM Toolkit Plan, R5-1a)." }
 	},
